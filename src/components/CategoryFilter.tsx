@@ -1,4 +1,4 @@
-const categories = ["All", "Tech", "Vlogs", "Education", "Gaming", "Music", "Travel"];
+const categories = ["All", "Full Videos", "Shorts Videos", "Travel Videos", "Vlog Videos"];
 
 interface CategoryFilterProps {
   active: string;
@@ -11,10 +11,10 @@ const CategoryFilter = ({ active, onChange }: CategoryFilterProps) => (
       <button
         key={cat}
         onClick={() => onChange(cat)}
-        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+        className={`px-4 py-2 rounded-lg text-sm font-bold text-white transition-all duration-300 ease-out ${
           active === cat
-            ? "metallic-card text-foreground shadow-lg border border-metallic-shine/20"
-            : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-accent"
+            ? "metallic-card shadow-lg border border-white/30 shadow-white/20"
+            : "bg-secondary/80 hover:bg-white/20 hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]"
         }`}
       >
         {cat}

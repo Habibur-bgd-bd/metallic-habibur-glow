@@ -34,6 +34,7 @@ const Index = () => {
         views: v.views,
         date: v.date,
         duration: v.duration,
+        category: v.category || "Full Videos",
       }))
     : sampleVideos;
 

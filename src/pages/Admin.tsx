@@ -19,7 +19,7 @@ const emptyVideo = {
   views: "0 views",
   date: "",
   duration: "0:00",
-  category: "All",
+  category: "Full Videos",
 };
 
 const Admin = () => {
