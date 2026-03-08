@@ -110,6 +110,8 @@ const Index = () => {
                 No videos found.
               </p>
             )}
+            {/* Contact Section */}
+            <ContactForm />
           </main>
 
           {/* Footer */}
