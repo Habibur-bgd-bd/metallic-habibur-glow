@@ -183,7 +183,7 @@ const Admin = () => {
                       <div className="flex gap-1">
                         {editingRows[video.id] && (
                           <Button size="icon" variant="ghost" onClick={() => handleSave(video.id)}>
-                            <Save size={16} className="text-green-400" />
+                            <Save size={16} className="text-primary" />
                           </Button>
                         )}
                         <Button
