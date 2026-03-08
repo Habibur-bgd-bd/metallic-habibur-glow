@@ -8,6 +8,7 @@ export interface Video {
   views: string;
   date: string;
   duration: string;
+  category?: string;
 }
 
 const VideoCard = ({ video }: { video: Video }) => (

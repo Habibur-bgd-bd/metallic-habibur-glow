@@ -9,6 +9,7 @@ export const sampleVideos: Video[] = [
     views: "125K views",
     date: "2 weeks ago",
     duration: "24:15",
+    category: "Full Videos",
   },
   {
     id: "2",
@@ -18,6 +19,7 @@ export const sampleVideos: Video[] = [
     views: "89K views",
     date: "5 days ago",
     duration: "12:30",
+    category: "Shorts Videos",
   },
   {
     id: "3",
@@ -27,6 +29,7 @@ export const sampleVideos: Video[] = [
     views: "210K views",
     date: "1 month ago",
     duration: "18:42",
+    category: "Travel Videos",
   },
   {
     id: "4",
@@ -36,6 +39,7 @@ export const sampleVideos: Video[] = [
     views: "67K views",
     date: "3 days ago",
     duration: "15:08",
+    category: "Full Videos",
   },
   {
     id: "5",
@@ -45,6 +49,7 @@ export const sampleVideos: Video[] = [
     views: "45K views",
     date: "1 week ago",
     duration: "9:55",
+    category: "Vlog Videos",
   },
   {
     id: "6",
@@ -54,6 +59,7 @@ export const sampleVideos: Video[] = [
     views: "312K views",
     date: "3 weeks ago",
     duration: "20:30",
+    category: "Vlog Videos",
   },
   {
     id: "7",
@@ -63,6 +69,7 @@ export const sampleVideos: Video[] = [
     views: "156K views",
     date: "2 months ago",
     duration: "32:17",
+    category: "Full Videos",
   },
   {
     id: "8",
@@ -72,5 +79,6 @@ export const sampleVideos: Video[] = [
     views: "98K views",
     date: "4 days ago",
     duration: "11:22",
+    category: "Shorts Videos",
   },
 ];

@@ -34,6 +34,7 @@ const Index = () => {
         views: v.views,
         date: v.date,
         duration: v.duration,
+        category: v.category || "Full Videos",
       }))
     : sampleVideos;
 
@@ -42,9 +43,11 @@ const Index = () => {
     setReady(true);
   }, []);
 
-  const filteredVideos = videos.filter((v) =>
-    v.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredVideos = videos.filter((v) => {
+    const matchesSearch = v.title.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory = category === "All" || v.category === category;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <>

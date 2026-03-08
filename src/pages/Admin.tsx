@@ -19,7 +19,7 @@ const emptyVideo = {
   views: "0 views",
   date: "",
   duration: "0:00",
-  category: "All",
+  category: "Full Videos",
 };
 
 const Admin = () => {
@@ -215,11 +215,16 @@ const Admin = () => {
               </div>
               <div>
                 <label className="text-sm text-muted-foreground mb-1 block">Category</label>
-                <Input
+                <select
                   value={newVideo.category}
                   onChange={(e) => setNewVideo((prev) => ({ ...prev, category: e.target.value }))}
-                  placeholder="e.g. Music, Tech"
-                />
+                  className="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground"
+                >
+                  <option value="Full Videos">Full Videos</option>
+                  <option value="Shorts Videos">Shorts Videos</option>
+                  <option value="Travel Videos">Travel Videos</option>
+                  <option value="Vlog Videos">Vlog Videos</option>
+                </select>
               </div>
             </div>
 
