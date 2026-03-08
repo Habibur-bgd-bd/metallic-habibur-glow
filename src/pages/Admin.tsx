@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Trash2, Plus, Save, ArrowLeft } from "lucide-react";
+import { Trash2, Plus, Save, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -27,6 +27,7 @@ const Admin = () => {
   const [editingRows, setEditingRows] = useState<Record<string, Partial<Video>>>({});
   const [newVideo, setNewVideo] = useState(emptyVideo);
   const [showAdd, setShowAdd] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const { data: videos, isLoading } = useQuery({
     queryKey: ["admin-videos"],
@@ -36,6 +37,31 @@ const Admin = () => {
       return data;
     },
   });
+
+  const fetchYouTubeMetadata = async (url: string) => {
+    if (!url.trim()) return;
+    setIsFetching(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("youtube-metadata", {
+        body: { url },
+      });
+      if (error) throw error;
+      if (data.error) throw new Error(data.error);
+      setNewVideo((prev) => ({
+        ...prev,
+        title: data.title || prev.title,
+        thumbnail: data.thumbnail || prev.thumbnail,
+        duration: data.duration || prev.duration,
+        views: data.views || prev.views,
+        channel: data.channel || prev.channel,
+      }));
+      toast.success("YouTube metadata fetched!");
+    } catch (e: any) {
+      toast.error("Failed to fetch metadata: " + (e.message || "Unknown error"));
+    } finally {
+      setIsFetching(false);
+    }
+  };
 
   const addMutation = useMutation({
     mutationFn: async (video: typeof newVideo) => {
@@ -97,7 +123,7 @@ const Admin = () => {
     }
   };
 
-  const fields: { key: keyof Pick<Video, 'title' | 'thumbnail' | 'youtube_url' | 'views' | 'date' | 'duration' | 'category'>; label: string; wide?: boolean }[] = [
+  const tableFields: { key: keyof Pick<Video, 'title' | 'thumbnail' | 'youtube_url' | 'views' | 'date' | 'duration' | 'category'>; label: string; wide?: boolean }[] = [
     { key: "title", label: "Title", wide: true },
     { key: "thumbnail", label: "Thumbnail URL", wide: true },
     { key: "youtube_url", label: "YouTube URL", wide: true },
@@ -105,7 +131,7 @@ const Admin = () => {
     { key: "date", label: "Date" },
     { key: "duration", label: "Duration" },
     { key: "category", label: "Category" },
-  ] as const;
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -126,32 +152,86 @@ const Admin = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        {/* Add new video form */}
         {showAdd && (
           <div className="metallic-card rounded-lg p-6 mb-8 space-y-4">
             <h2 className="text-lg font-semibold text-foreground">Add New Video</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {fields.map((f) => (
-                <div key={f.key} className={f.wide ? "md:col-span-2" : ""}>
-                  <label className="text-sm text-muted-foreground mb-1 block">{f.label}</label>
-                  <Input
-                    value={(newVideo as any)[f.key] || ""}
-                    onChange={(e) => setNewVideo((prev) => ({ ...prev, [f.key]: e.target.value }))}
-                    placeholder={f.label}
-                  />
-                </div>
-              ))}
+
+            {/* YouTube URL with fetch button */}
+            <div>
+              <label className="text-sm text-muted-foreground mb-1 block">YouTube URL</label>
+              <div className="flex gap-2">
+                <Input
+                  value={newVideo.youtube_url}
+                  onChange={(e) => setNewVideo((prev) => ({ ...prev, youtube_url: e.target.value }))}
+                  placeholder="https://www.youtube.com/watch?v=..."
+                  className="flex-1"
+                />
+                <Button
+                  onClick={() => fetchYouTubeMetadata(newVideo.youtube_url)}
+                  disabled={!newVideo.youtube_url.trim() || isFetching}
+                  variant="secondary"
+                >
+                  {isFetching ? <Loader2 size={16} className="animate-spin mr-1" /> : null}
+                  {isFetching ? "Fetching..." : "Fetch Info"}
+                </Button>
+              </div>
             </div>
+
+            {/* Auto-fetched fields (read-only display) */}
+            {newVideo.title && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-md border border-border/50 bg-muted/30">
+                <div className="md:col-span-2">
+                  <label className="text-sm text-muted-foreground mb-1 block">Title (auto-fetched)</label>
+                  <Input value={newVideo.title} readOnly className="bg-transparent opacity-80" />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="text-sm text-muted-foreground mb-1 block">Thumbnail (auto-fetched)</label>
+                  <Input value={newVideo.thumbnail} readOnly className="bg-transparent opacity-80" />
+                </div>
+                <div>
+                  <label className="text-sm text-muted-foreground mb-1 block">Duration (auto-fetched)</label>
+                  <Input value={newVideo.duration} readOnly className="bg-transparent opacity-80" />
+                </div>
+                <div>
+                  <label className="text-sm text-muted-foreground mb-1 block">Views (auto-fetched)</label>
+                  <Input value={newVideo.views} readOnly className="bg-transparent opacity-80" />
+                </div>
+                <div>
+                  <label className="text-sm text-muted-foreground mb-1 block">Channel (auto-fetched)</label>
+                  <Input value={newVideo.channel} readOnly className="bg-transparent opacity-80" />
+                </div>
+              </div>
+            )}
+
+            {/* Manual fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm text-muted-foreground mb-1 block">Date</label>
+                <Input
+                  value={newVideo.date}
+                  onChange={(e) => setNewVideo((prev) => ({ ...prev, date: e.target.value }))}
+                  placeholder="e.g. 2 days ago"
+                />
+              </div>
+              <div>
+                <label className="text-sm text-muted-foreground mb-1 block">Category</label>
+                <Input
+                  value={newVideo.category}
+                  onChange={(e) => setNewVideo((prev) => ({ ...prev, category: e.target.value }))}
+                  placeholder="e.g. Music, Tech"
+                />
+              </div>
+            </div>
+
             <div className="flex gap-2">
               <Button onClick={() => addMutation.mutate(newVideo)} disabled={!newVideo.title || !newVideo.thumbnail}>
                 <Plus size={16} className="mr-1" /> Add
               </Button>
-              <Button variant="ghost" onClick={() => setShowAdd(false)}>Cancel</Button>
+              <Button variant="ghost" onClick={() => { setShowAdd(false); setNewVideo(emptyVideo); }}>Cancel</Button>
             </div>
           </div>
         )}
 
-        {/* Videos table */}
         {isLoading ? (
           <p className="text-center text-muted-foreground py-20">Loading videos...</p>
         ) : videos && videos.length > 0 ? (
@@ -160,7 +240,7 @@ const Admin = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[60px]">#</TableHead>
-                  {fields.map((f) => (
+                  {tableFields.map((f) => (
                     <TableHead key={f.key}>{f.label}</TableHead>
                   ))}
                   <TableHead className="w-[120px]">Actions</TableHead>
@@ -170,7 +250,7 @@ const Admin = () => {
                 {videos.map((video, i) => (
                   <TableRow key={video.id}>
                     <TableCell className="text-muted-foreground">{i + 1}</TableCell>
-                    {fields.map((f) => (
+                    {tableFields.map((f) => (
                       <TableCell key={f.key}>
                         <Input
                           className="bg-transparent border-border/30 text-sm"
@@ -186,11 +266,7 @@ const Admin = () => {
                             <Save size={16} className="text-primary" />
                           </Button>
                         )}
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          onClick={() => deleteMutation.mutate(video.id)}
-                        >
+                        <Button size="icon" variant="ghost" onClick={() => deleteMutation.mutate(video.id)}>
                           <Trash2 size={16} className="text-destructive" />
                         </Button>
                       </div>
