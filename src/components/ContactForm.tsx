@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Send } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const ContactForm = () => {
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,9 +31,13 @@ const ContactForm = () => {
     if (error) {
       toast({ title: "Failed to send message", description: "Please try again later.", variant: "destructive" });
     } else {
-      toast({ title: "Message sent!", description: "Thank you for reaching out." });
+      setSubmitted(true);
       setForm({ name: "", email: "", phone: "", message: "" });
     }
+  };
+
+  const handleSendAnother = () => {
+    setSubmitted(false);
   };
 
   return (
@@ -47,66 +52,134 @@ const ContactForm = () => {
         <h2 className="font-brand text-3xl text-gradient-social text-center mb-2">Contact Me</h2>
         <p className="text-muted-foreground text-center mb-8">Have a question or want to work together? Drop me a message!</p>
 
-        <form onSubmit={handleSubmit} className="metallic-card rounded-2xl p-6 sm:p-8 space-y-5">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Name <span className="text-destructive">*</span></label>
-            <Input
-              placeholder="Your name"
-              value={form.name}
-              onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              maxLength={100}
-              required
-              className="bg-secondary/50 border-border/50 focus:border-primary"
-            />
-          </div>
+        <AnimatePresence mode="wait">
+          {submitted ? (
+            <motion.div
+              key="thank-you"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5 }}
+              className="metallic-card rounded-2xl p-8 sm:p-12 text-center space-y-5"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              >
+                <CheckCircle2 className="mx-auto text-primary" size={56} />
+              </motion.div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Email <span className="text-destructive">*</span></label>
-            <Input
-              type="email"
-              placeholder="your@email.com"
-              value={form.email}
-              onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-              maxLength={255}
-              required
-              className="bg-secondary/50 border-border/50 focus:border-primary"
-            />
-          </div>
+              <motion.h3
+                className="font-brand text-2xl text-gradient-social"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                আসসালামু আলাইকুম
+              </motion.h3>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Phone Number</label>
-            <Input
-              type="tel"
-              placeholder="+1 (555) 000-0000"
-              value={form.phone}
-              onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-              maxLength={20}
-              className="bg-secondary/50 border-border/50 focus:border-primary"
-            />
-          </div>
+              <motion.p
+                className="text-foreground text-lg font-medium"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                Thank you for your message!
+              </motion.p>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Message <span className="text-destructive">*</span></label>
-            <Textarea
-              placeholder="Write your message here..."
-              value={form.message}
-              onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-              maxLength={1000}
-              required
-              rows={5}
-              className="bg-secondary/50 border-border/50 focus:border-primary resize-none"
-            />
-          </div>
+              <motion.p
+                className="text-muted-foreground"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                I appreciate you reaching out. I'll get back to you as soon as possible.
+              </motion.p>
 
-          <Button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-primary text-primary-foreground hover:text-foreground hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-all duration-300 hover:scale-[1.02]"
-          >
-            <Send size={18} />
-            {loading ? "Sending..." : "Send Message"}
-          </Button>
-        </form>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+              >
+                <Button
+                  onClick={handleSendAnother}
+                  className="mt-4 bg-primary text-primary-foreground hover:text-foreground hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-all duration-300 hover:scale-[1.02]"
+                >
+                  Send Another Message
+                </Button>
+              </motion.div>
+            </motion.div>
+          ) : (
+            <motion.form
+              key="form"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onSubmit={handleSubmit}
+              className="metallic-card rounded-2xl p-6 sm:p-8 space-y-5"
+            >
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Name <span className="text-destructive">*</span></label>
+                <Input
+                  placeholder="Your name"
+                  value={form.name}
+                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                  maxLength={100}
+                  required
+                  className="bg-secondary/50 border-border/50 focus:border-primary"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Email <span className="text-destructive">*</span></label>
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={form.email}
+                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                  maxLength={255}
+                  required
+                  className="bg-secondary/50 border-border/50 focus:border-primary"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Phone Number</label>
+                <Input
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  value={form.phone}
+                  onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                  maxLength={20}
+                  className="bg-secondary/50 border-border/50 focus:border-primary"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Message <span className="text-destructive">*</span></label>
+                <Textarea
+                  placeholder="Write your message here..."
+                  value={form.message}
+                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+                  maxLength={1000}
+                  required
+                  rows={5}
+                  className="bg-secondary/50 border-border/50 focus:border-primary resize-none"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-primary text-primary-foreground hover:text-foreground hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-all duration-300 hover:scale-[1.02]"
+              >
+                <Send size={18} />
+                {loading ? "Sending..." : "Send Message"}
+              </Button>
+            </motion.form>
+          )}
+        </AnimatePresence>
       </motion.div>
     </section>
   );
