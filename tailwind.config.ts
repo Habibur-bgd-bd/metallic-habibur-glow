@@ -61,6 +61,7 @@ export default {
           ig: "hsl(var(--ig-purple))",
           x: "hsl(var(--x-dark))",
           yt: "hsl(var(--yt-red))",
+          tiktok: "hsl(var(--tiktok-pink))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
