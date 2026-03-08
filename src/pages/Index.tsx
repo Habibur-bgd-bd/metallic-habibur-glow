@@ -1,5 +1,7 @@
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import WelcomeAnimation from "@/components/WelcomeAnimation";
 import SocialLinks from "@/components/SocialLinks";
 import SearchBar from "@/components/SearchBar";
@@ -13,12 +15,34 @@ const Index = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
 
+  const { data: dbVideos } = useQuery({
+    queryKey: ["videos"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("videos").select("*").order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Use DB videos if available, fallback to sample data
+  const videos = dbVideos && dbVideos.length > 0
+    ? dbVideos.map((v) => ({
+        id: v.id,
+        title: v.title,
+        thumbnail: v.thumbnail,
+        channel: v.channel,
+        views: v.views,
+        date: v.date,
+        duration: v.duration,
+      }))
+    : sampleVideos;
+
   const handleWelcomeComplete = useCallback(() => {
     setShowWelcome(false);
     setReady(true);
   }, []);
 
-  const filteredVideos = sampleVideos.filter((v) =>
+  const filteredVideos = videos.filter((v) =>
     v.title.toLowerCase().includes(search.toLowerCase())
   );
 
