@@ -42,9 +42,11 @@ const Index = () => {
     setReady(true);
   }, []);
 
-  const filteredVideos = videos.filter((v) =>
-    v.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredVideos = videos.filter((v) => {
+    const matchesSearch = v.title.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory = category === "All" || v.category === category;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <>
