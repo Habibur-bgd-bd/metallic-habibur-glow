@@ -10,6 +10,7 @@ import VideoCard from "@/components/VideoCard";
 import { sampleVideos } from "@/data/sampleVideos";
 import ContactForm from "@/components/ContactForm";
 import AboutMe from "@/components/AboutMe";
+import SubscribeSection from "@/components/SubscribeSection";
 
 const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -111,6 +112,8 @@ const Index = () => {
                 No videos found.
               </p>
             )}
+            {/* Subscribe Section */}
+            <SubscribeSection />
             {/* About Section */}
             <AboutMe />
             {/* Contact Section */}
