@@ -18,11 +18,14 @@ const AboutMe = () => (
       </div>
       {/* Text Content */}
       <div className="flex-1 text-center md:text-left space-y-4">
+        <blockquote className="border-l-4 border-primary/50 pl-4 italic text-foreground leading-relaxed">
+          "হে মুমিনগণ ! তোমরা ধৈর্য ধারণ করো, ধৈর্যের প্রতিযোগিতা করো এবং সর্বদা প্রস্তুত থাকো; আর আল্লাহকে ভয় করো—যাতে তোমরা সফলকাম হতে পারো।" — <span className="font-semibold text-gradient-social">আল-কুরআন (সূরা আল-ইমরান: ২০০)</span>
+        </blockquote>
         <p className="text-foreground leading-relaxed">
-          আসসালামু আলাইকুম! I'm <span className="font-semibold text-gradient-social">Habibur</span>, a passionate content creator from Bangladesh. I love sharing my journey, culture, and creativity with the world through videos, photography, and storytelling.
+          আমি একজন ভিডিও কন্টেন্ট ক্রিয়েটর। আমি বিশ্বাস করি, জীবনের প্রতিটি ক্ষেত্রে ধৈর্য এবং সততার সাথে কাজ করলে আল্লাহ সফলতা দান করেন। আমার এই প্ল্যাটফর্মের মাধ্যমে আমি ইতিবাচক এবং তথ্যবহুল ভিডিও শেয়ার করার চেষ্টা করি, যা মানুষকে সঠিক পথে চলতে বা নতুন কিছু শিখতে অনুপ্রেরণা জোগায়।
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          Whether it's exploring new places, capturing everyday moments, or connecting with amazing people — I believe in creating content that inspires and brings joy. Thank you for being part of this journey!
+          আপনারা আমার এই যাত্রায় সাথে আছেন, এজন্য আপনাদের প্রতি আমি কৃতজ্ঞ। আমার কাজের মূল লক্ষ্য হলো মানুষের উপকারে আসা এবং নিজেকে একজন সৎ মুসলিম হিসেবে গড়ে তোলা।
         </p>
       </div>
     </div>
