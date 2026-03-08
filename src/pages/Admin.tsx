@@ -97,7 +97,7 @@ const Admin = () => {
     }
   };
 
-  const fields = [
+  const fields: { key: keyof Pick<Video, 'title' | 'thumbnail' | 'youtube_url' | 'views' | 'date' | 'duration' | 'category'>; label: string; wide?: boolean }[] = [
     { key: "title", label: "Title", wide: true },
     { key: "thumbnail", label: "Thumbnail URL", wide: true },
     { key: "youtube_url", label: "YouTube URL", wide: true },
