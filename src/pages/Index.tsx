@@ -9,6 +9,7 @@ import CategoryFilter from "@/components/CategoryFilter";
 import VideoCard from "@/components/VideoCard";
 import { sampleVideos } from "@/data/sampleVideos";
 import ContactForm from "@/components/ContactForm";
+import AboutMe from "@/components/AboutMe";
 
 const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
