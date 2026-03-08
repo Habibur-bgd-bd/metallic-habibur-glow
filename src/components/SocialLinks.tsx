@@ -15,13 +15,13 @@ const socials = [
 
 const SocialLinks = () => (
   <div className="flex items-center gap-4">
-    {socials.map(({ icon: Icon, href, glow, hoverColor, isCustom }) => (
+    {socials.map(({ icon: Icon, href, color, isCustom }) => (
       <a
-        key={href}
+        key={href + color}
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`text-muted-foreground ${hoverColor} ${glow} transition-all duration-300 p-2 rounded-lg hover:bg-accent`}
+        className={`${color} hover:text-foreground hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-all duration-300 p-2 rounded-lg hover:bg-accent hover:scale-110`}
       >
         {isCustom ? <Icon /> : <Icon size={20} />}
       </a>
