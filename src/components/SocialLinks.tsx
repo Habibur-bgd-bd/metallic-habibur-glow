@@ -7,21 +7,21 @@ const XIcon = () => (
 );
 
 const socials = [
-  { icon: Facebook, href: "https://facebook.com/Habibur.bgd", glow: "glow-fb", hoverColor: "hover:text-social-fb" },
-  { icon: Instagram, href: "https://instagram.com/Habibur.bgd", glow: "glow-ig", hoverColor: "hover:text-social-ig" },
-  { icon: XIcon, href: "https://x.com/Habibur.bgd", glow: "glow-x", hoverColor: "hover:text-metallic-shine", isCustom: true },
-  { icon: Youtube, href: "https://youtube.com/@Habibur.bgd", glow: "glow-yt", hoverColor: "hover:text-social-yt" },
+  { icon: Facebook, href: "#", color: "text-social-fb", isCustom: false },
+  { icon: Instagram, href: "#", color: "text-social-ig", isCustom: false },
+  { icon: XIcon, href: "#", color: "text-metallic-shine", isCustom: true },
+  { icon: Youtube, href: "#", color: "text-social-yt", isCustom: false },
 ];
 
 const SocialLinks = () => (
   <div className="flex items-center gap-4">
-    {socials.map(({ icon: Icon, href, glow, hoverColor, isCustom }) => (
+    {socials.map(({ icon: Icon, href, color, isCustom }) => (
       <a
-        key={href}
+        key={href + color}
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`text-muted-foreground ${hoverColor} ${glow} transition-all duration-300 p-2 rounded-lg hover:bg-accent`}
+        className={`${color} hover:text-foreground hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-all duration-300 p-2 rounded-lg hover:bg-accent hover:scale-110`}
       >
         {isCustom ? <Icon /> : <Icon size={20} />}
       </a>
