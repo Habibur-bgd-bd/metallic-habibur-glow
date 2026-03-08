@@ -6,11 +6,18 @@ const XIcon = () => (
   </svg>
 );
 
+const TikTokIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.75a8.18 8.18 0 004.76 1.52V6.84a4.84 4.84 0 01-1-.15z" />
+  </svg>
+);
+
 const socials = [
-  { icon: Facebook, href: "#", color: "text-social-fb", isCustom: false },
-  { icon: Instagram, href: "#", color: "text-social-ig", isCustom: false },
-  { icon: XIcon, href: "#", color: "text-metallic-shine", isCustom: true },
-  { icon: Youtube, href: "#", color: "text-social-yt", isCustom: false },
+  { icon: Facebook, href: "https://www.facebook.com/habibur.bgd.bd", color: "text-social-fb", isCustom: false },
+  { icon: Instagram, href: "https://www.instagram.com/habibur.bgd.bd/", color: "text-social-ig", isCustom: false },
+  { icon: Youtube, href: "https://www.youtube.com/@Habibur_bgd", color: "text-social-yt", isCustom: false },
+  { icon: TikTokIcon, href: "https://www.tiktok.com/@habibur.bgd.bd", color: "text-social-tiktok", isCustom: true },
+  { icon: XIcon, href: "https://x.com/Habibur_bgd2030", color: "text-metallic-shine", isCustom: true },
 ];
 
 const SocialLinks = () => (
