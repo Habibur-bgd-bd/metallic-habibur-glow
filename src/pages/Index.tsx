@@ -112,6 +112,8 @@ const Index = () => {
                 No videos found.
               </p>
             )}
+            {/* Subscribe Section */}
+            <SubscribeSection />
             {/* About Section */}
             <AboutMe />
             {/* Contact Section */}
