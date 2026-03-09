@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import myPhoto from "@/assets/myphoto.png";
 
 const AboutMe = () => (
   <motion.section
