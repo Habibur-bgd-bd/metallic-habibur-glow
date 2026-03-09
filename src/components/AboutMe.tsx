@@ -14,7 +14,7 @@ const AboutMe = () => (
       {/* Profile Image Placeholder */}
       <div className="shrink-0">
         <div className="w-40 h-40 md:w-48 md:h-48 rounded-full border-2 border-border bg-muted flex items-center justify-center overflow-hidden">
-          <span className="text-muted-foreground text-sm">Your Photo</span>
+          <img src={myPhoto} alt="Habibur.bgd" className="w-full h-full object-cover" />
         </div>
       </div>
       {/* Text Content */}
