@@ -38,6 +38,7 @@ const Index = () => {
         date: v.date,
         duration: v.duration,
         category: v.category || "Full Videos",
+        youtube_url: v.youtube_url || undefined,
       }))
     : sampleVideos;
 
