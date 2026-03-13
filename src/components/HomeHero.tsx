@@ -20,9 +20,13 @@ const HomeHero = () => (
     <motion.div
       className="relative group"
       initial={{ opacity: 0, scale: 0.85 }}
-      animate={{ opacity: 1, scale: 1, ...floatingAnimation }}
+      animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.9, ease: "easeOut" }}
     >
+      <motion.div
+        animate={{ y: [0, -12, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      >
       <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-primary/40 via-accent/20 to-primary/40 blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 animate-pulse" />
       <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[hsl(221,44%,41%/0.3)] via-[hsl(330,70%,50%/0.2)] to-[hsl(30,90%,55%/0.3)] blur-md" />
       <div className="relative metallic-card rounded-full overflow-hidden border-2 border-border/40 shadow-[0_0_40px_hsl(220,8%,55%/0.15)]">
