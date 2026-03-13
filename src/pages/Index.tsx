@@ -16,7 +16,7 @@ const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [ready, setReady] = useState(false);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("Full Videos");
+  const [category, setCategory] = useState("Home");
 
   const { data: dbVideos } = useQuery({
     queryKey: ["videos"],
@@ -47,9 +47,18 @@ const Index = () => {
     setReady(true);
   }, []);
 
+  const handleCategoryChange = useCallback((cat: string) => {
+    setCategory(cat);
+    if (cat === "About") {
+      setTimeout(() => {
+        document.getElementById("about-section")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, []);
+
   const filteredVideos = videos.filter((v) => {
     const matchesSearch = v.title.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = category === "All" || v.category === category;
+    const matchesCategory = category === "Home" || category === "About" || v.category === category;
     return matchesSearch && matchesCategory;
   });
 
