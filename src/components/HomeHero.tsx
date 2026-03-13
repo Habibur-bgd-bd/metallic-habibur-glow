@@ -36,6 +36,7 @@ const HomeHero = () => (
           className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 object-cover"
         />
       </div>
+      </motion.div>
     </motion.div>
 
     <motion.div
