@@ -125,7 +125,9 @@ const Index = () => {
             {/* Subscribe Section */}
             <SubscribeSection />
             {/* About Section */}
-            <AboutMe />
+            <div id="about-section">
+              <AboutMe />
+            </div>
             {/* Contact Section */}
             <ContactForm />
           </main>
