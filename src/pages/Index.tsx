@@ -16,7 +16,7 @@ const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [ready, setReady] = useState(false);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("Full Videos");
 
   const { data: dbVideos } = useQuery({
     queryKey: ["videos"],
