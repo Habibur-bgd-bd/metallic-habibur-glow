@@ -95,7 +95,7 @@ const Index = () => {
               <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                 <SearchBar value={search} onChange={setSearch} />
               </div>
-              <CategoryFilter active={category} onChange={setCategory} />
+              <CategoryFilter active={category} onChange={handleCategoryChange} />
             </motion.div>
 
             {/* Video Grid */}
