@@ -11,6 +11,7 @@ import { sampleVideos } from "@/data/sampleVideos";
 import ContactForm from "@/components/ContactForm";
 import AboutMe from "@/components/AboutMe";
 import SubscribeSection from "@/components/SubscribeSection";
+import HomeHero from "@/components/HomeHero";
 
 const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -56,9 +57,11 @@ const Index = () => {
     }
   }, []);
 
+  const isVideoCategory = !["Home", "About"].includes(category);
+
   const filteredVideos = videos.filter((v) => {
     const matchesSearch = v.title.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = category === "Home" || category === "About" || v.category === category;
+    const matchesCategory = v.category === category;
     return matchesSearch && matchesCategory;
   });
 
@@ -76,7 +79,7 @@ const Index = () => {
           {/* Header */}
           <header className="sticky top-0 z-40 metallic-sheen border-b border-border/50 backdrop-blur-sm">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-              <h1 className="font-brand text-3xl text-gradient-social cursor-pointer">
+              <h1 className="font-brand text-3xl text-gradient-social cursor-pointer" onClick={() => handleCategoryChange("Home")}>
                 Habibur.bgd
               </h1>
               <SocialLinks />
@@ -85,49 +88,62 @@ const Index = () => {
 
           {/* Main Content */}
           <main className="container mx-auto px-4 py-8">
-            {/* Search & Filters */}
+            {/* Filters */}
             <motion.div
               className="flex flex-col gap-6 mb-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                <SearchBar value={search} onChange={setSearch} />
-              </div>
+              {isVideoCategory && (
+                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                  <SearchBar value={search} onChange={setSearch} />
+                </div>
+              )}
               <CategoryFilter active={category} onChange={handleCategoryChange} />
             </motion.div>
 
-            {/* Video Grid */}
-            <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-            >
-              {filteredVideos.map((video, i) => (
-                <motion.div
-                  key={video.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * i, duration: 0.4 }}
-                >
-                  <VideoCard video={video} />
-                </motion.div>
-              ))}
-            </motion.div>
+            {/* Home View */}
+            {category === "Home" && <HomeHero />}
 
-            {filteredVideos.length === 0 && (
-              <p className="text-center text-muted-foreground py-20 text-lg">
-                No videos found.
-              </p>
+            {/* About View */}
+            {category === "About" && (
+              <div id="about-section">
+                <AboutMe />
+              </div>
             )}
+
+            {/* Video Grid */}
+            {isVideoCategory && (
+              <>
+                <motion.div
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                  {filteredVideos.map((video, i) => (
+                    <motion.div
+                      key={video.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 * i, duration: 0.4 }}
+                    >
+                      <VideoCard video={video} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                {filteredVideos.length === 0 && (
+                  <p className="text-center text-muted-foreground py-20 text-lg">
+                    No videos found.
+                  </p>
+                )}
+              </>
+            )}
+
             {/* Subscribe Section */}
             <SubscribeSection />
-            {/* About Section */}
-            <div id="about-section">
-              <AboutMe />
-            </div>
             {/* Contact Section */}
             <ContactForm />
           </main>
