@@ -1,4 +1,4 @@
-const categories = ["All", "Full Videos", "Shorts Videos", "Travel Videos", "Vlog Videos"];
+const categories = ["Full Videos", "Shorts Videos", "Travel Videos", "Vlog Videos"];
 
 interface CategoryFilterProps {
   active: string;
