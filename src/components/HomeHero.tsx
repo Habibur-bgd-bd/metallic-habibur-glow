@@ -55,23 +55,33 @@ const HomeHero = () => (
 
     {/* Text */}
     <motion.div
-      className="text-center space-y-5 max-w-2xl"
+      className="text-center space-y-5 max-w-2xl hero-text-float"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.6 }}
+      transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
     >
-      <h2 className="font-brand text-5xl md:text-6xl text-gradient-social">
+      <motion.h2 
+        className="font-brand text-5xl md:text-6xl text-gradient-social-glow hero-text-glow"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+      >
         Habibur.bgd
-      </h2>
+      </motion.h2>
       <motion.div
         className="mx-auto h-[1px] bg-gradient-to-r from-transparent via-metallic-shine to-transparent"
         initial={{ width: 0 }}
         animate={{ width: 180 }}
-        transition={{ duration: 1, delay: 1 }}
+        transition={{ duration: 1, delay: 1.2 }}
       />
-      <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
+      <motion.p 
+        className="text-muted-foreground text-lg md:text-xl leading-relaxed"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 1.4 }}
+      >
         আসসালামু আলাইকুম! আমার চ্যানেলে স্বাগতম। এখানে আপনি ভ্রমণ, ভ্লগ এবং আরও অনেক কিছু উপভোগ করতে পারবেন।
-      </p>
+      </motion.p>
     </motion.div>
   </motion.section>
 );
