@@ -37,7 +37,7 @@ const HomeHero = () => (
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
     >
-      <div className="profile-pulse">
+      <div>
         <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-social-fb/40 via-social-ig/30 to-social-yt/40 blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700" />
         <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-social-fb/30 via-social-ig/20 to-social-yt/30 blur-md" />
         <div className="relative metallic-card rounded-full overflow-hidden border-2 border-border/40 shadow-[0_0_40px_hsl(220,8%,55%/0.15)]">
