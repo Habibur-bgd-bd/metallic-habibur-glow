@@ -131,12 +131,36 @@
     filter: drop-shadow(0 0 12px hsl(0, 80%, 50% / 0.7));
   }
 
-  /* Hero Text Glow Effect - Softer */
+  /* Hero Text Neon Glow - Metallic Dark Red Flicker */
+  @keyframes neon-flicker {
+    0%, 100% {
+      text-shadow:
+        0 0 4px hsl(0 60% 45% / 0.5),
+        0 0 10px hsl(0 60% 40% / 0.3),
+        0 0 20px hsl(0 50% 35% / 0.2),
+        0 0 40px hsl(220 8% 55% / 0.1);
+    }
+    50% {
+      text-shadow:
+        0 0 6px hsl(0 60% 50% / 0.6),
+        0 0 14px hsl(0 60% 45% / 0.4),
+        0 0 28px hsl(0 50% 40% / 0.25),
+        0 0 50px hsl(220 8% 60% / 0.15);
+    }
+  }
+
   .hero-text-glow {
-    text-shadow:
-      0 0 6px hsl(0 0% 100% / 0.4),
-      0 0 12px hsl(0 0% 100% / 0.25),
-      0 0 24px hsl(0 0% 100% / 0.15);
+    animation: neon-flicker 4s ease-in-out infinite;
+  }
+
+  /* Profile Image Pulse/Breathe */
+  @keyframes profile-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  .profile-pulse {
+    animation: profile-pulse 3.5s ease-in-out infinite;
   }
 
   /* Hero Floating Animation - Slower & Smoother */
